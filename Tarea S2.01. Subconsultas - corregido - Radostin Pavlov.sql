@@ -60,7 +60,13 @@ WHERE
             HAVING `Suma por compañia` > AVG(amount)) AS t)
 ORDER BY `Compañías con ventas por encima de la media`;
 
+-- Coorrección 2:
 
+SELECT (SELECT round(AVG(amount),2) FROM transaction) as Promedio, amount as Cantidad, company.*
+FROM transaction
+JOIN company on transaction.company_id = company.id
+WHERE amount > (SELECT AVG(amount) FROM transaction)
+ORDER BY Cantidad;
 
 -- Ejercicio 3: El departamento de contabilidad perdió la información de las transacciones 
 -- realizadas por una empresa, pero no recuerdan su nombre, sólo recuerdan que su nombre 
